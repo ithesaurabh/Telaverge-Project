@@ -1,0 +1,32 @@
+# deployment-server2.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server2-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: server2
+  template:
+    metadata:
+      labels:
+        app: server2
+    spec:
+      containers:
+      - name: server2-container
+        image: krmada/server2:latest
+        ports:
+        - containerPort: 5002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server2-service
+spec:
+  selector:
+    app: server2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5002
